@@ -14,7 +14,10 @@ export async function generateMetadata({ params }) {
     try {
         const response = await fetch(
             `${API_BASE}/cms-pages/public/${encodeURIComponent(slug)}`,
-            { cache: "no-store" }
+            {
+                cache: "no-store",
+                headers: { "ngrok-skip-browser-warning": "true" },
+            }
         );
 
         if (!response.ok) {

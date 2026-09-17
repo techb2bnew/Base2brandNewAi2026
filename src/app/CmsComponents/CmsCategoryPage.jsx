@@ -12,14 +12,6 @@ const API_BASE =
 
 const DEFAULT_PRIMARY_COLOR = "#ff6a00";
 
-// Shared renderer for every category-scoped CMS route (/solution/[slug],
-// /industry/[slug], ...). The expected `category` is derived from the
-// route's own folder name via cmsCategoryRoutes.js instead of being passed
-// in by each caller — the DB's category string ("Service" | "Solution" |
-// "Industries", see the admin's SavePageDialog CATEGORY_OPTIONS) doesn't
-// always match the URL segment's spelling (e.g. "industry" vs
-// "Industries"), and comparing against the folder name here means there's
-// exactly one place that mapping can drift, not one per route file.
 const CmsCategoryPage = () => {
     const params = useParams();
     const pathname = usePathname();
@@ -36,7 +28,10 @@ const CmsCategoryPage = () => {
             try {
                 const response = await fetch(
                     `${API_BASE}/cms-pages/public/${encodeURIComponent(slug)}`,
-                    { cache: "no-store" }
+                    {
+                        cache: "no-store",
+                        headers: { "ngrok-skip-browser-warning": "true" },
+                    }
                 );
 
                 const data = await response.json();
@@ -58,15 +53,6 @@ const CmsCategoryPage = () => {
         fetchCmsPage();
     }, [slug]);
 
-    // Navbar/Footer are rendered by the root layout, outside this
-    // component's own tree, and they read var(--b2b-primary) directly — so
-    // the CMS page's color has to be pushed onto <html> AND <body> (the
-    // route-based theme class from ThemeWrapper is applied to both, and
-    // globals.css declares --b2b-primary via that class directly on
-    // whichever element carries it, so body never just inherits html's
-    // value — both need the override or it's invisible). Cleanup removes
-    // it on unmount so leaving this page restores the normal per-route
-    // theme color for every other page.
     useEffect(() => {
         if (!cmsPage) return;
 
