@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { OfficialLogo } from "@/components/visual/OfficialLogo";
 
 const DEFAULT_LOGO = "/images/homelogov2.png";
 
@@ -68,6 +69,24 @@ export function CurrentLogo({ className = "max-w-46" }) {
     window.addEventListener("serviceActive", handler);
     return () => window.removeEventListener("serviceActive", handler);
   }, [currentPath]);
+
+  // CMS pages (/service/*, /solution/*, /industry/*) have a runtime theme
+  // color from the database, so a pre-baked PNG (with the accent color
+  // already burned into the pixels, like every other route in logosList)
+  // can't follow it. Render the SVG wordmark instead, with its "2" tied to
+  // the live --b2b-primary variable.
+  const isCmsRoute = ["/service/", "/solution/", "/industry/"].some((prefix) =>
+    currentPath?.startsWith(prefix)
+  );
+
+  if (isCmsRoute) {
+    return (
+      <OfficialLogo
+        accent="var(--b2b-primary)"
+        className={`${className} h-8 sm:h-9 w-auto transition-all duration-500`}
+      />
+    );
+  }
 
   return (
     <Image

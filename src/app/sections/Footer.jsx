@@ -89,9 +89,8 @@ function FooterNavColumn({ col }) {
         />
       </button>
       <ul
-        className={`mt-3 overflow-hidden transition-[max-height] duration-300 ease-out sm:max-h-none! sm:overflow-visible ${
-          open ? "max-h-96" : "max-h-0"
-        }`}
+        className={`mt-3 overflow-hidden transition-[max-height] duration-300 ease-out sm:max-h-none! sm:overflow-visible ${open ? "max-h-96" : "max-h-0"
+          }`}
       >
         {col.links.map((l) => (
           <li key={l.label} className="pb-3 last:pb-0">
@@ -128,9 +127,8 @@ function FooterOffices() {
         />
       </button>
       <div
-        className={`grid grid-cols-2 gap-6 overflow-hidden transition-[max-height] duration-300 ease-out lg:grid-cols-4 sm:max-h-none! sm:overflow-visible ${
-          open ? "max-h-300" : "max-h-0"
-        }`}
+        className={`grid grid-cols-2 gap-6 overflow-hidden transition-[max-height] duration-300 ease-out lg:grid-cols-4 sm:max-h-none! sm:overflow-visible ${open ? "max-h-300" : "max-h-0"
+          }`}
       >
         {OFFICES.map((o) => (
           <div
@@ -166,7 +164,7 @@ export function Footer() {
         <div className="grid lg:grid-cols-[1.5fr_2fr] gap-8 pb-6">
           <div>
             <CurrentLogo />
-            <p className="mt-2 text-mute max-w-md text-sm sm:text-base leading-relaxed">
+            <p className="mt-4 text-mute max-w-md text-sm leading-relaxed">
               From base — to brand. From idea — to orbit. Base2Brand is the digital transformation, AI and enterprise software partner for organisations that build for the public good and the global stage.
             </p>
 
@@ -233,7 +231,7 @@ export function Footer() {
         <FooterOffices />
 
         <div className="mt-6 md:mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-mute">
-          <div>© {new Date().getFullYear()} Base2Brand Technologies. All rights reserved. <Link href="/privacy-policy" className="text-orange-brand hover:text-orange-brand/80 transition">Privacy Policy</Link></div> 
+          <div>© {new Date().getFullYear()} Base2Brand Technologies. All rights reserved. <Link href="/privacy-policy" className="text-orange-brand hover:text-orange-brand/80 transition">Privacy Policy</Link></div>
           <div className="font-mono-display uppercase tracking-[0.2em]">
             Crafted in 8 cities · Delivered globally
           </div>
