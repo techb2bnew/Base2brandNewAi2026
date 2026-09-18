@@ -39,7 +39,7 @@ export function OfficialLogo({ className, accent = "#ff6a00", letterColor = "#ff
     <svg
       viewBox={VB}
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("block w-auto h-full", className)}
+      className={cn("block w-auto", className)}
       data-testid="official-logo"
       aria-label="Base2Brand"
     >
