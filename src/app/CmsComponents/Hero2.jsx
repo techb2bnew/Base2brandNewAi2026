@@ -128,7 +128,7 @@ const Hero2 = ({
                         <m.div
                             key={`${metric.label}-${i}`}
                             variants={fadeUp}
-                            className="bg-[#070b1c] py-3 md:py-7 px-4 md:px-7 lg:px-8 hover:bg-[#0b1024] transition-colors group"
+                            className="bg-[#070b1c] py-3 px-4 md:px-7 lg:px-8 hover:bg-[#0b1024] transition-colors group"
                         >
                             <div className="b2b-number text-3xl md:text-4xl font-semibold tracking-tight bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent">
                                 {metric.value}

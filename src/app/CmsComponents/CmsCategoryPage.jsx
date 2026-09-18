@@ -35,7 +35,7 @@ const CmsCategoryPage = () => {
                 );
 
                 const data = await response.json();
-                console.log('Cms page', data);
+                // console.log('Cms page', data);
 
                 if (!response.ok || !data?.success || !data?.cmsPage) {
                     setNotFound(true);

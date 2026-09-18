@@ -19,6 +19,7 @@ import GrowthSystem from "@/CmsComponents/GrowthSystem";
 import WorkCarousel from "@/CmsComponents/WorkCarousel";
 import Industries from "@/CmsComponents/Industries";
 import ClientFootprint from "@/CmsComponents/ClientFootprint";
+import ClientFeedback from "@/CmsComponents/ClientFeedback";
 
 export const sectionMap = [
   { id: "hero-1", name: "Hero 1", type: "hero-1", component: Hero1 },
@@ -42,6 +43,7 @@ export const sectionMap = [
   { id: "case-card", name: "Case Study Card", type: "case-card", component: WorkCarousel },
   { id: "industries", name: "Industries Section", type: "industries", component: Industries },
   { id: "client-footprint", name: "Client Footprint (Globe)", type: "client-footprint", component: ClientFootprint },
+  { id: "client-feedback", name: "Client Feedback (Video Testimonials)", type: "client-feedback", component: ClientFeedback },
 ];
 
 export const getSectionComponent = (type) =>

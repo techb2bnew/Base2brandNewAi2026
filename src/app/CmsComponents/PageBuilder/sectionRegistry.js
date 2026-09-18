@@ -19,6 +19,7 @@ import GrowthSystem from "../GrowthSystem";
 import WorkCarousel from "../WorkCarousel";
 import Industries, { INDUSTRIES_DEFAULT } from "../Industries";
 import ClientFootprint, { TOP_REGIONS_DEFAULT } from "../ClientFootprint";
+import ClientFeedback from "../ClientFeedback";
 
 /**
  * sectionRegistry — single source of truth for every section type the
@@ -1255,6 +1256,75 @@ export const sectionRegistry = [
                     { name: "region", type: "text", label: "Region / Country Name" },
                     { name: "note", type: "textarea", label: "Note / Work Summary" },
                     { name: "count", type: "text", label: "Count Badge (e.g. 150+ Projects)" },
+                ],
+            },
+        ],
+    },
+    {
+        key: "client-feedback",
+        label: "Client Feedback (Video Testimonials)",
+        category: "Testimonials",
+        component: ClientFeedback,
+        default_viewimage: "/images/cmsimages/FeedbackCard.png",
+        defaultData: {
+            eyebrow: "VOICES FROM THE BRIDGE",
+            titlePart1: "Real ",
+            titleHighlight1: "outcomes",
+            titlePart2: ", from businesses ",
+            titleHighlight2: "who scaled with",
+            titlePart3: " us.",
+            testimonials: [
+                {
+                    name: "BROOKLYNSTOKELY",
+                    role: "E-COMMERCE STORE OWNER",
+                    company: "",
+                    quote:
+                        "So I got my Shopify website built on Base2Brand. I'm, I'm glad to have contacted these guys as they helped me in identifying and understanding different aspects of, e-commerce, which I was totally unaware of. Now, I'm, getting a good amount of conversions through the website, which they designed and developed for me. So, I totally recommend everyone to get their e-commerce store designed by these guys. Kudos to their team.",
+                    video: "https://res.cloudinary.com/protected/video/upload/v1784706041/Base2brandNew2026/Video-two_1_gampmt.mp4",
+                },
+                {
+                    name: "Jahn Brazil",
+                    role: "CEO & Owner",
+                    company: "",
+                    quote:
+                        "Congratulations on 6 years in business. On behalf of Mara Lang, Nikki and I and everybody else, we want to wish you guys a very happy 6 years of being in business. Special thanks to Arti, Rakesh, Sara, Rahul, and Sam. Thank you guys.",
+                    video: "https://res.cloudinary.com/protected/video/upload/v1784706418/Base2brandNew2026/VID-20260721-WA0011_2_gg5rsu.mp4",
+                },
+                {
+                    name: "Ronald Martin",
+                    role: "Founder & Operator",
+                    company: "",
+                    quote:
+                        "We have worked with Base2Brand for about 6 months now, from everything from social media to SEO. They've been unbelievably helpful, and also extremely responsive, which has been a huge priority for us, because obviously. Sometimes you need something done on very, very short notice, and they've always been able to provide, so we're very happy to recommend them.",
+                    video: "https://res.cloudinary.com/protected/video/upload/v1784706626/Base2brandNew2026/Video_one_1_eyzvxq.mp4",
+                },
+                {
+                    name: "Anniedavies",
+                    role: "E-COMMERCE STORE OWNER",
+                    company: "",
+                    quote:
+                        "Working with Base2Brand was a really great experience from start to finish. The communication was on point, the team was really communicative and able to deliver an exceptional branded sales orientated website.",
+                    video: "https://res.cloudinary.com/protected/video/upload/v1784706867/Base2brandNew2026/video-three_1_1_zvurvo.mp4",
+                },
+            ],
+        },
+        fields: [
+            { name: "eyebrow", type: "text", label: "Eyebrow" },
+            { name: "titlePart1", type: "text", label: "Title (part 1)" },
+            { name: "titleHighlight1", type: "text", label: "Title (highlight 1)" },
+            { name: "titlePart2", type: "text", label: "Title (part 2)" },
+            { name: "titleHighlight2", type: "text", label: "Title (highlight 2)" },
+            { name: "titlePart3", type: "text", label: "Title (part 3)" },
+            {
+                name: "testimonials",
+                type: "array-object",
+                label: "Testimonials",
+                itemFields: [
+                    { name: "name", type: "text", label: "Name" },
+                    { name: "role", type: "text", label: "Role" },
+                    { name: "company", type: "text", label: "Company (optional)" },
+                    { name: "quote", type: "textarea", label: "Quote" },
+                    { name: "video", type: "text", label: "Video URL (Cloudinary)" },
                 ],
             },
         ],
