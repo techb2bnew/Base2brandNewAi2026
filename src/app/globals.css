@@ -73,6 +73,7 @@
 
         /* Floating WhatsApp button */
         @keyframes whatsapp-float-bob {
+
             0%,
             100% {
                 transform: translateY(0);
@@ -1814,7 +1815,7 @@
             color: var(--b2b-ink);
             font-family: var(--b2b-font-body);
         }
-        
+
         .theme-aboutus {
             --b2b-bg: #030305;
             --b2b-bg-2: #0a0a14;
@@ -1864,10 +1865,11 @@
             color: var(--b2b-ink);
             font-family: var(--b2b-font-body);
         }
+
         .blog_description span,
         .blog_description p {
             color: #ffffffbf !important;
-            font-size: 17px;
+            font-size: 15px;
             font-family: Inter, system-ui, sans-serif;
         }
 
@@ -1883,10 +1885,11 @@
         .blog_description h2 strong {
             color: #42d4ffe6 !important;
         }
+
         .blog_description strong {
             color: rgb(59, 59, 231) !important;
         }
-       
+
 
         @keyframes onloadbgt {
             0% {
@@ -2446,63 +2449,66 @@
             br {
                 display: none;
             }
-                    .blog_description span,
-        .blog_description p {
-            font-size: 14px;
-        }
 
-        .blog_description h2 {
-            font-size: 30px
-        }
+            .blog_description span,
+            .blog_description p {
+                font-size: 14px;
+            }
+
+            .blog_description h2 {
+                font-size: 30px
+            }
         }
 
         .phone-input-wrap .PhoneInput {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-}
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
 
-.phone-input-wrap .PhoneInputCountry {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding-right: 0.75rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
+        .phone-input-wrap .PhoneInputCountry {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding-right: 0.75rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.phone-input-wrap .PhoneInputCountrySelect {
-  background: transparent;
-  color: white;
-  outline: none;
-  cursor: pointer;
-}
-.phone-input-wrap .PhoneInputCountrySelect option {
-  background: #05070D;
-  color: white;
-}
+        .phone-input-wrap .PhoneInputCountrySelect {
+            background: transparent;
+            color: white;
+            outline: none;
+            cursor: pointer;
+        }
 
-.phone-input-wrap .PhoneInputCountryIcon {
-  width: 1.25rem;
-  height: 1.25rem;
-  box-shadow: none;
-}
+        .phone-input-wrap .PhoneInputCountrySelect option {
+            background: #05070D;
+            color: white;
+        }
 
-.phone-input-wrap .PhoneInputInput {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 0.875rem;
-  padding: 0.875rem 0;
-}
+        .phone-input-wrap .PhoneInputCountryIcon {
+            width: 1.25rem;
+            height: 1.25rem;
+            box-shadow: none;
+        }
 
-@media screen and (max-width : 768px) {
-    .phone-input-wrap .PhoneInputInput {
-       padding: 0.700rem 0; 
-    }
-}
-.phone-input-wrap .PhoneInputInput::placeholder {
-  color: rgba(255, 255, 255, 0.35);
-}
+        .phone-input-wrap .PhoneInputInput {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 0.875rem;
+            padding: 0.875rem 0;
+        }
+
+        @media screen and (max-width : 768px) {
+            .phone-input-wrap .PhoneInputInput {
+                padding: 0.700rem 0;
+            }
+        }
+
+        .phone-input-wrap .PhoneInputInput::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
