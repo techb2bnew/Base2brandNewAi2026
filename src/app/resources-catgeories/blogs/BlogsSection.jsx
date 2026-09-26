@@ -129,15 +129,15 @@ export default function BlogsSection({ sectionRef }) {
                             <Calendar className="h-3.5 w-3.5" />
                             {blog?.createdAt
                               ? new Date(blog.createdAt).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "2-digit",
-                                  year: "numeric",
-                                })
+                                month: "short",
+                                day: "2-digit",
+                                year: "numeric",
+                              })
                               : ""}
                           </span>
-                          <span className="inline-flex items-center gap-1.5">
+                          {/* <span className="inline-flex items-center gap-1.5">
                             <Eye className="h-3.5 w-3.5" /> {blog?.blogViews || 0}
-                          </span>
+                          </span> */}
                         </div>
 
                         <h3 className="font-display text-xl md:text-2xl lg:text-3xl tracking-tight text-white line-clamp-2 md:line-clamp-3">
@@ -203,15 +203,15 @@ export default function BlogsSection({ sectionRef }) {
                             <Calendar className="h-3.5 w-3.5" />
                             {blog?.createdAt
                               ? new Date(blog.createdAt).toLocaleDateString("en-US", {
-                                  month: "short",
-                                  day: "2-digit",
-                                  year: "numeric",
-                                })
+                                month: "short",
+                                day: "2-digit",
+                                year: "numeric",
+                              })
                               : ""}
                           </span>
-                          <span className="inline-flex items-center gap-1.5">
+                          {/* <span className="inline-flex items-center gap-1.5">
                             <Eye className="h-3.5 w-3.5" /> {blog?.blogViews || 0}
-                          </span>
+                          </span> */}
                         </div>
 
                         <h3 className="font-display text-lg md:text-2xl text-white line-clamp-1">
