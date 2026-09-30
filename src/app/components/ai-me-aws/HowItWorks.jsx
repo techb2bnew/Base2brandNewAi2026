@@ -1,6 +1,9 @@
 "use client";
 
 import { Plug, BrainCircuit, Rocket, Zap } from "lucide-react";
+import Reveal from "./Reveal";
+import { RevealGroup, RevealItem } from "./RevealGroup";
+import PauseWhenHidden from "./PauseWhenHidden";
 
 const STEPS = [
   {
@@ -31,9 +34,9 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section data-testid="aime-how-it-works" className="relative py-16 sm:py-24">
+    <PauseWhenHidden as="section" data-testid="aime-how-it-works" className="relative py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mb-12 text-center">
+        <Reveal as="div" className="mb-6 text-center">
           <span className="aime-eyebrow">
             <span className="aime-glow-dot" />
             How AI.me Works
@@ -41,14 +44,15 @@ export default function HowItWorks() {
           <h2 className="mx-auto mt-5 max-w-2xl font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
             From connected data to executed action.
           </h2>
-        </div>
+        </Reveal>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step) => (
-            <div
+        <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.1}>
+          {STEPS.map((step, i) => (
+            <RevealItem
               key={step.n}
               data-testid={`aime-step-${step.n}`}
-              className="relative rounded-2xl border aime-card p-6"
+              className="aime-card-glow relative rounded-2xl border aime-card p-6"
+              style={{ animationDelay: `${i * 0.35}s` }}
             >
               <span className="font-mono text-xs tracking-[0.2em] text-white/35">
                 {step.n}
@@ -65,10 +69,10 @@ export default function HowItWorks() {
               <p className="mt-2 text-sm leading-relaxed text-white/55">
                 {step.body}
               </p>
-            </div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </div>
-    </section>
+    </PauseWhenHidden>
   );
 }

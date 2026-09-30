@@ -1,110 +1,167 @@
 "use client";
 
+import { m } from "framer-motion";
 import {
-  Building2,
-  Users,
-  Mail,
-  Database,
-  FileText,
-  Braces,
   ArrowRight,
   ArrowUpRight,
   CalendarDays,
+  Sparkles,
 } from "lucide-react";
-import { SiShopify, SiWhatsapp } from "react-icons/si";
-import NeuronOrbit from "./NeuronOrbit";
-
-const ORBIT_NODES = [
-  { label: "ERP", icon: Building2 },
-  { label: "CRM", icon: Users },
-  { label: "Shopify", icon: SiShopify },
-  { label: "WhatsApp", icon: SiWhatsapp },
-  { label: "Email", icon: Mail },
-  { label: "Databases", icon: Database },
-  { label: "Documents", icon: FileText },
-  { label: "Internal APIs", icon: Braces },
-];
+import ShiningText from "@/components/site/ShiningText";
+import BackgroundPaths from "@/components/site/BackgroundPaths";
+import NeuralCommandCenter from "@/components/ai/NeuralCommandCenter";
+import PauseWhenHidden from "./PauseWhenHidden";
 
 export default function Hero() {
   return (
-    <section
+    <PauseWhenHidden
+      as="section"
       id="top"
       data-testid="aime-hero"
-      className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24"
+      className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20"
     >
-      <div className="aime-grid-bg pointer-events-none absolute inset-0 opacity-60" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[560px] w-[900px] -translate-x-1/2 rounded-full blur-[140px]"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(var(--aime-accent-rgb),0.18) 0%, transparent 70%)",
-        }}
-      />
+      {/* Background field — same treatment as the /ai-automation hero:
+          radial accent blobs, atmospheric paths, and a masked grid. */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-[radial-gradient(ellipse_at_center,rgba(var(--aime-accent-rgb),0.18),rgba(3,3,10,0)_60%)]" />
+        <div className="aime-aurora absolute top-40 left-10 w-[400px] h-[400px] rounded-full bg-[rgba(var(--aime-accent-rgb),0.06)] blur-[120px]" />
+        <div className="absolute top-20 right-10 w-[300px] h-[300px] rounded-full bg-[rgba(var(--aime-accent-2-rgb),0.05)] blur-[100px]" />
+        <BackgroundPaths opacity={0.55} />
+        <div className="grain" />
+        <svg
+          className="absolute inset-0 w-full h-full opacity-[0.12]"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <pattern
+              id="aime-hero-grid"
+              width="60"
+              height="60"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 60 0 L 0 0 0 60"
+                fill="none"
+                stroke="rgba(var(--aime-accent-rgb),0.18)"
+                strokeWidth="0.5"
+              />
+            </pattern>
+            <radialGradient id="aime-hero-grid-fade" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="black" stopOpacity="1" />
+              <stop offset="100%" stopColor="black" stopOpacity="0" />
+            </radialGradient>
+            <mask id="aime-hero-grid-mask">
+              <rect width="100%" height="100%" fill="url(#aime-hero-grid-fade)" />
+            </mask>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill="url(#aime-hero-grid)"
+            mask="url(#aime-hero-grid-mask)"
+          />
+        </svg>
+      </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-8">
-          {/* Left — copy */}
-          <div className="text-center lg:text-left">
-            <span className="aime-eyebrow">
-              <span className="aime-glow-dot" />
-              AI.me
-            </span>
+      <div className="relative max-w-7xl mx-auto px-4 md:px-10">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-16 items-center">
+          <div className="lg:col-span-7">
+            <m.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <ShiningText testId="aime-hero-eyebrow">AI.ME</ShiningText>
+            </m.div>
 
-            <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl">
+            <m.h1
+              data-testid="aime-hero-headline"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.1 }}
+              className="mt-4 font-display text-white text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-[-0.03em] text-balance"
+            >
               The AI Operating Layer
               <br />
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(90deg, var(--aime-accent), var(--aime-accent-2))",
-                }}
-              >
+              <span className="bg-gradient-to-br from-[#C084FC] via-[#A855F7] to-[#6D28D9] bg-clip-text text-transparent">
                 for Your Enterprise.
               </span>
-            </h1>
+            </m.h1>
 
-            <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg lg:mx-0">
+            <m.p
+              data-testid="aime-hero-subheadline"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+              className="mt-4 text-base md:text-lg text-white/55 max-w-xl"
+            >
               Connect your company&rsquo;s data, systems, apps, and AI agents
               through one intelligent workspace.
-            </p>
+            </m.p>
 
-            <div className="mx-auto mt-8 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border aime-card px-4 py-2 text-xs text-white/70 sm:text-sm lg:mx-0">
+            <m.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
+              className="mt-6 inline-flex flex-wrap items-center gap-2 rounded-full border aime-card px-4 py-2 text-xs text-white/70 sm:text-sm"
+            >
               <CalendarDays className="h-4 w-4 text-[var(--aime-accent)]" />
               Meet us at AI Everything Abu Dhabi &bull; 6&ndash;7 Oct 2026
-            </div>
+            </m.div>
 
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+            <m.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.4 }}
+              className="mt-6 md:mt-8 flex flex-wrap gap-4"
+            >
               <a
                 href="#book-a-meeting"
                 data-testid="aime-hero-primary-cta"
-                className="group inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-black transition-all hover:-translate-y-0.5"
-                style={{ background: "var(--aime-accent)" }}
+                className="group inline-flex items-center gap-2 bg-[#8B5CF6] hover:bg-[#A855F7] text-white px-6 py-3 md:py-4 rounded-full text-sm font-medium transition-all shadow-[0_0_30px_-10px_rgba(139,92,246,0.55)]"
               >
+                <Sparkles className="w-4 h-4" />
                 Book a Meeting
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
               <a
                 href="#core-idea"
                 data-testid="aime-hero-secondary-cta"
-                className="inline-flex items-center justify-center gap-2 rounded-full border aime-card px-7 py-3.5 text-sm font-medium text-white transition-all hover:border-white/25"
+                className="inline-flex items-center gap-2 border border-white/15 hover:border-white/40 hover:bg-white/[0.03] text-white px-6 py-3 md:py-4 rounded-full text-sm font-medium transition-all"
               >
                 Explore AI.me
-                <ArrowUpRight className="h-4 w-4" />
+                <ArrowUpRight className="w-4 h-4" />
               </a>
-            </div>
+            </m.div>
+
+            <m.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs uppercase tracking-[0.25em] font-mono text-white/35"
+            >
+              <span>Enterprise Grade</span>
+              <span className="w-1 h-1 rounded-full bg-[#8B5CF6]" />
+              <span>Agent-Ready</span>
+              <span className="w-1 h-1 rounded-full bg-[#8B5CF6]" />
+              <span>Live At AI Everything</span>
+              <span className="w-1 h-1 rounded-full bg-[#8B5CF6]" />
+              <span>Outcome-Focused</span>
+            </m.div>
           </div>
 
-          {/* Right — neuron visual */}
-          <div className="flex justify-center">
-            <NeuronOrbit
-              size={420}
-              rings={[{ radius: 168, duration: 34, nodes: ORBIT_NODES }]}
-            />
-          </div>
+          {/* Right — neural command center visual (same one used on
+              /ai-automation's hero) */}
+          <m.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.2 }}
+            className="lg:col-span-5 relative"
+          >
+            <NeuralCommandCenter />
+          </m.div>
         </div>
       </div>
-    </section>
+    </PauseWhenHidden>
   );
 }

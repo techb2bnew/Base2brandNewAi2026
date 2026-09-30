@@ -1,17 +1,22 @@
+/* Same palette as the sitewide `.theme-ai` (/ai-automation) — purple
+   "intelligence division" brand — kept as a locally scoped theme (rather
+   than joining the sitewide route→theme map) so the shared Navbar/Footer
+   stay on their default color per this page's own earlier requirements. */
 .theme-ai-me-aws {
-  --aime-bg: #05070c;
-  --aime-bg-2: #090d18;
-  --aime-accent: #38bdf8;
-  --aime-accent-rgb: 56, 189, 248;
-  --aime-accent-2: #8b5cf6;
-  --aime-accent-2-rgb: 139, 92, 246;
-  --aime-border: rgba(255, 255, 255, 0.1);
+  --aime-bg: #03030a;
+  --aime-bg-2: #0a0618;
+  --aime-accent: #8b5cf6;
+  --aime-accent-rgb: 139, 92, 246;
+  --aime-accent-2: #c084fc;
+  --aime-accent-2-rgb: 192, 132, 252;
+  --aime-border: rgba(255, 255, 255, 0.08);
   background: var(--aime-bg);
 
   /* Keeps the embedded OnboardingForm's accent (which reads --b2b-primary)
-     visually consistent with this page's cyan theme instead of the site
+     visually consistent with this page's purple theme instead of the site
      default orange — scoped to this page only. */
   --b2b-primary: var(--aime-accent);
+  --b2b-primary-rgb: var(--aime-accent-rgb);
 }
 
 .theme-ai-me-aws .aime-eyebrow {
@@ -40,7 +45,15 @@
 .theme-ai-me-aws .aime-card {
   border-radius: 1.5rem;
   border: 1px solid var(--aime-border);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* `backdrop-filter` is expensive to recompute on every scroll frame, and
+   this page originally had it on ~30 cards (including the orbit's rotating
+   icon nodes) which is what was causing the scroll stutter. Keep the frosted
+   look only on the two large, static, non-repeating containers that opt
+   into it explicitly via this class. */
+.theme-ai-me-aws .aime-card-glass {
   backdrop-filter: blur(20px);
 }
 
@@ -58,6 +71,7 @@
 
 .theme-ai-me-aws .aime-pulse {
   animation: aime-pulse 3.2s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 @keyframes aime-orbit {
@@ -67,4 +81,169 @@
 
 .theme-ai-me-aws .aime-orbit-ring {
   animation: aime-orbit linear infinite;
+  will-change: transform;
+}
+
+/* Soft ring pulsing behind the NeuronOrbit hub label. Transform + opacity
+   only, so it stays cheap even though it runs continuously. */
+@keyframes aime-hub-ring {
+  0%, 100% { transform: scale(0.94); opacity: 0.55; }
+  50% { transform: scale(1.08); opacity: 0; }
+}
+
+.theme-ai-me-aws .aime-hub-ring {
+  animation: aime-hub-ring 2.8s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Slow "breathing" glow used behind the Hero and Event CTA backgrounds —
+   deliberately subtle and slow so it reads as ambience, not motion. */
+@keyframes aime-aurora {
+  0%, 100% { transform: scale(1) translateY(0); opacity: 0.7; }
+  50% { transform: scale(1.08) translateY(-1.5%); opacity: 1; }
+}
+
+.theme-ai-me-aws .aime-aurora {
+  animation: aime-aurora 9s ease-in-out infinite;
+  animation-play-state: var(--aime-anim-play-state, running);
+  will-change: transform, opacity;
+}
+
+/* Animated gradient sweep used for the "6–7 Oct 2026" shimmer text. */
+@keyframes aime-shimmer {
+  0% { background-position: 200% 50%; }
+  100% { background-position: -200% 50%; }
+}
+
+.theme-ai-me-aws .aime-shimmer-text {
+  background-image: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    var(--aime-accent) 35%,
+    var(--aime-accent-2) 50%,
+    var(--aime-accent) 65%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aime-shimmer 5s linear infinite;
+  animation-play-state: var(--aime-anim-play-state, running);
+}
+
+/* Light streak that periodically sweeps across the primary "Book a Meeting"
+   CTA. Sits on a pseudo-element, clipped to the button's own rounded shape
+   via overflow:hidden, and animates `transform` only — the button's real
+   background/border/padding are never touched. */
+.theme-ai-me-aws .aime-cta-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-ai-me-aws .aime-cta-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  transform: skewX(-20deg) translateX(-10%);
+  animation: aime-shine-sweep 3.6s ease-in-out infinite;
+  animation-play-state: var(--aime-anim-play-state, running);
+}
+
+@keyframes aime-shine-sweep {
+  0%, 55% { transform: skewX(-20deg) translateX(-10%); }
+  100% { transform: skewX(-20deg) translateX(420%); }
+}
+
+/* Cursor-follow spotlight for the AWS Positioning tiles. `--spot-x/--spot-y`
+   are updated from JS only on pointer-fine devices; on touch the variables
+   simply stay at their default (centered) value for a static glow. */
+.theme-ai-me-aws .aime-spotlight {
+  position: relative;
+  overflow: hidden;
+  --spot-x: 50%;
+  --spot-y: 50%;
+}
+
+.theme-ai-me-aws .aime-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--spot-x) var(--spot-y),
+    rgba(var(--aime-accent-rgb), 0.18),
+    transparent 70%
+  );
+  /* Static, centered glow by default (covers touch devices, which never
+     fire mousemove to update --spot-x/y). Desktop gets a brighter version
+     that follows the cursor on hover. */
+  opacity: 0.35;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-ai-me-aws .aime-spotlight::after {
+    opacity: 0;
+  }
+
+  .theme-ai-me-aws .aime-spotlight:hover::after {
+    opacity: 1;
+  }
+}
+
+/* How It Works step cards — soft pulsing accent glow instead of a
+   connecting line. Animating `box-shadow`/`border-color` directly forces a
+   full repaint of the card every frame (confirmed via a Chrome trace — this
+   was the actual cause of the remaining scroll stutter). Instead, the glow
+   is a separate ::after layer with a STATIC box-shadow, and only its
+   `opacity` animates — opacity is compositor-only, so the shadow is painted
+   once and the pulse is then free (just alpha blending on the GPU). */
+.theme-ai-me-aws .aime-card-glow {
+  position: relative;
+}
+
+.theme-ai-me-aws .aime-card-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(var(--aime-accent-rgb), 0.5);
+  box-shadow: 0 0 28px 2px rgba(var(--aime-accent-rgb), 0.32);
+  opacity: 0;
+  pointer-events: none;
+  animation: aime-card-glow-pulse 3.6s ease-in-out infinite;
+  animation-play-state: var(--aime-anim-play-state, running);
+  will-change: opacity;
+}
+
+@keyframes aime-card-glow-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-ai-me-aws .aime-orbit-ring,
+  .theme-ai-me-aws .aime-pulse,
+  .theme-ai-me-aws .aime-hub-ring,
+  .theme-ai-me-aws .aime-aurora,
+  .theme-ai-me-aws .aime-shimmer-text,
+  .theme-ai-me-aws .aime-cta-shine::after {
+    animation: none !important;
+    display: none;
+  }
+
+  .theme-ai-me-aws .aime-card-glow::after {
+    animation: none !important;
+    opacity: 0.5;
+  }
 }
