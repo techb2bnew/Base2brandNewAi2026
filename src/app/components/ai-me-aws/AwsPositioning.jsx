@@ -31,7 +31,7 @@ export default function AwsPositioning() {
             AI.me &times; AWS
           </span>
           <h2 className="mx-auto mt-5 max-w-2xl font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-            Built for the modern cloud. Designed to work with AWS.
+            Built For The Modern Cloud. Designed To Work With AWS.
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
             AI.me can leverage cloud infrastructure, storage, databases,

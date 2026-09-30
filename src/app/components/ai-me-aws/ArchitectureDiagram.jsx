@@ -119,7 +119,7 @@ export default function ArchitectureDiagram() {
             Enterprise Architecture
           </span>
           <h2 className="mx-auto mt-5 max-w-xl font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-            One connected system, top to bottom.
+            One Connected System, Top To Bottom.
           </h2>
         </Reveal>
 

@@ -114,7 +114,7 @@ export default function LiveExample() {
             Example
           </span>
           <h2 className="mx-auto mt-5 max-w-xl font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-            Ask AI.me anything about your business.
+            Ask AI.me Anything About Your Business.
           </h2>
         </Reveal>
 

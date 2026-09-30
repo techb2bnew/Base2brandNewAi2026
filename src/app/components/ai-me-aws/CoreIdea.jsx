@@ -1,5 +1,7 @@
 "use client";
 
+import Capabilities from "@/components/ai/Capabilities";
+import ConnectedSystemsWorkflow from "./ConnectedSystemsWorkflow";
 import {
   Building2,
   Users,
@@ -12,72 +14,171 @@ import {
   GitBranch,
 } from "lucide-react";
 import { SiShopify, SiWhatsapp } from "react-icons/si";
-import Reveal from "./Reveal";
-import { RevealGroup, RevealItem } from "./RevealGroup";
-import Atmosphere from "@/components/site/Atmosphere";
-import SmokeBackground from "@/components/site/SmokeBackground";
-const SYSTEMS = [
-  { label: "ERP", icon: Building2 },
-  { label: "CRM", icon: Users },
-  { label: "Shopify", icon: SiShopify },
-  { label: "WhatsApp", icon: SiWhatsapp },
-  { label: "Email", icon: Mail },
-  { label: "Databases", icon: Database },
-  { label: "Documents", icon: FileText },
-  { label: "Internal APIs", icon: Braces },
-  { label: "MCP Tools", icon: Network },
-  { label: "AI Agents", icon: BrainCircuit },
-  { label: "Business Workflows", icon: GitBranch },
+
+const SYSTEMS_CAPS = [
+  {
+    icon: Building2,
+    title: "ERP",
+    tagline: "Operations that think ahead",
+    desc: "AI.me reads your ERP in real time and turns operational data into decisions.",
+    accent: true,
+    items: [
+      "Predicts stock-outs and drafts reorder requests",
+      "Flags delayed shipments and cost overruns instantly",
+      "Answers finance and inventory questions in plain language",
+    ],
+    cta: "Explore ERP integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: Users,
+    title: "CRM",
+    tagline: "Every customer, fully understood",
+    desc: "AI.me connects to your CRM to give every team the full customer picture.",
+    items: [
+      "Identifies at-risk deals and customers before they churn",
+      "Writes personalized follow-ups for account managers",
+      "Auto-updates records after every call, email and chat",
+    ],
+    cta: "Explore CRM integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: SiShopify,
+    title: "Shopify",
+    tagline: "Your store, on autopilot",
+    desc: "AI.me monitors your store and acts on what it finds.",
+    accent: true,
+    items: [
+      "Tracks orders, returns and refunds as they happen",
+      "Finds why sales dipped or refunds spiked",
+      "Sends order updates to customers automatically",
+    ],
+    cta: "Explore Shopify integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: SiWhatsapp,
+    title: "WhatsApp",
+    tagline: "Replies where your customers are",
+    desc: "AI.me handles customer conversations on the channel they already use.",
+    accent: true,
+    items: [
+      "Answers order, product and support queries 24/7",
+      "Pulls live data from ERP and CRM for every reply",
+      "Supports English and Arabic",
+    ],
+    cta: "Explore WhatsApp integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: Mail,
+    title: "Email",
+    tagline: "Inbox into action",
+    desc: "AI.me reads, understands and acts on your business email.",
+    items: [
+      "Summarizes urgent threads every morning",
+      "Drafts context-aware replies for review",
+      "Logs key updates to CRM automatically",
+    ],
+    cta: "Explore Email integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: Database,
+    title: "Databases",
+    tagline: "Ask your data in English",
+    desc: "AI.me turns plain questions into accurate, instant answers.",
+    items: [
+      "No SQL or dashboards needed",
+      "Generates reports and charts on demand",
+      "Keeps access secure and role-based",
+    ],
+    cta: "Explore Database integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: FileText,
+    title: "Documents",
+    tagline: "Your knowledge, instantly searchable",
+    desc: "AI.me turns contracts, SOPs and policies into a private memory.",
+    accent: true,
+    items: [
+      "Finds exact clauses, terms and answers in seconds",
+      "Cites the source document for every answer",
+      "Keeps knowledge current as documents change",
+    ],
+    cta: "Explore Document memory",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: Braces,
+    title: "Internal APIs",
+    tagline: "Your systems, AI-ready",
+    desc: "AI.me connects to the custom tools only your company has.",
+    items: [
+      "Calls internal APIs securely to fetch or update data",
+      "Turns legacy systems into AI-usable tools",
+      "Works within your existing permissions",
+    ],
+    cta: "Explore API integration",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: Network,
+    title: "MCP Tools",
+    tagline: "Plug in any tool",
+    desc: "AI.me uses the Model Context Protocol to connect tools in minutes.",
+    accent: true,
+    items: [
+      "Adds new tools without custom integration work",
+      "Combines data from multiple tools in one answer",
+      "Scales as your tool stack grows",
+    ],
+    cta: "Explore MCP connectivity",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: BrainCircuit,
+    title: "AI Agents",
+    tagline: "A specialist for every team",
+    desc: "AI.me powers dedicated agents for Sales, HR, Finance and Ops.",
+    accent: true,
+    items: [
+      "Each agent knows its team's data and workflows",
+      "Agents collaborate across departments",
+      "Every action is logged and reviewable",
+    ],
+    cta: "Explore AI Agents",
+    ctaHref: "#connected-systems-example",
+  },
+  {
+    icon: GitBranch,
+    title: "Business Workflows",
+    tagline: "Processes that run themselves",
+    desc: "AI.me automates multi-step work across every connected system.",
+    accent: true,
+    items: [
+      "Runs onboarding, approvals and escalations end-to-end",
+      "Triggers actions based on real-time events",
+      "Keeps humans in the loop where it matters",
+    ],
+    cta: "See Cross-System Workflow ↓",
+    ctaHref: "#connected-systems-example",
+  },
 ];
 
 export default function CoreIdea() {
   return (
-    <section id="core-idea" data-testid="aime-core-idea" className="relative py-6 sm:py-10">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <SmokeBackground smokeColor="#7C3AED" opacity={0.14} />
-                <Atmosphere intensity={0.25} />
-        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
-          <Reveal>
-            <span className="aime-eyebrow">
-              <span className="aime-glow-dot" />
-              The Core Idea
-            </span>
-            <h2 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-              Your Enterprise. One AI Brain.
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-white/60 sm:text-lg">
-              AI.me sits at the center of your organization and connects
-              every system, tool and workflow you already run on.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-white/60 sm:text-lg">
-              The AI doesn&rsquo;t just answer questions. It retrieves
-              context, reasons over your enterprise data, calls tools, and
-              executes actions.
-            </p>
-          </Reveal>
-
-          <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3" stagger={0.04}>
-            {SYSTEMS.map(({ label, icon: Icon }) => (
-              <RevealItem
-                key={label}
-                y={12}
-                data-testid={`aime-system-chip-${label.toLowerCase().replace(/\s+/g, "-")}`}
-                className="flex flex-col items-start gap-3 rounded-2xl border aime-card px-4 py-4"
-              >
-                <div
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border"
-                  style={{ borderColor: "var(--aime-border)" }}
-                >
-                  <Icon className="h-4 w-4 text-[var(--aime-accent)]" />
-                </div>
-                <span className="text-sm font-medium text-white/85">
-                  {label}
-                </span>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
-      </div>
-    </section>
+    <div id="core-idea-wrapper" className="relative">
+      <Capabilities
+        id="core-idea"
+        highlightTag="THE CORE IDEA"
+        title="Your Enterprise. One AI Brain."
+        description="AI.me sits at the center of your organization and connects every system, tool and workflow you already run on — retrieving context, reasoning over live data, and executing actions."
+        capsData={SYSTEMS_CAPS}
+      />
+      <ConnectedSystemsWorkflow />
+    </div>
   );
 }

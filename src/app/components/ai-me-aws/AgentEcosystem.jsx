@@ -43,7 +43,7 @@ export default function AgentEcosystem() {
             Agent Ecosystem
           </span>
           <h2 className="mx-auto mt-5 max-w-2xl font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-            One brain. Many specialized agents.
+            One Brain. Many Specialized Agents.
           </h2>
         </Reveal>
 
