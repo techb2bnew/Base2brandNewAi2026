@@ -2,11 +2,17 @@
 import React, { useRef } from 'react';
 import PortfolioSection from './PortfolioSection';
 import "../components/Solutions/solution.css";
+import './alltools/tools.css'
 import Hero from "@/components/Solutions/Hero";
 import Narrative from "@/components/ai/Narrative";
 import FinalCTA from "@/components/ai/FinalCTA";
 import StarsBackground from "@/components/erp/StarsBackground";
 import Work from '@/components/portfolio-animation/sections/Work';
+import Directory from './alltools/Directory';
+import MobileApps from './alltools/MobileApps';
+import Websites from './alltools/Websites';
+import Marketing from './alltools/Marketing';
+import VideoShowcase from './alltools/VideoShowcase';
 // import RocketNavigator from '@/components/portfolio/RocketNavigator';
 // import Work from '@/components/portfolio/Work';
 
@@ -124,6 +130,11 @@ const PortfolioWrap = () => {
                 />
                 <PortfolioSection />
                 <Work cardsData={PROJECTS} />
+                <Directory />
+                <MobileApps />
+                <Websites />
+                <Marketing />
+                <VideoShowcase />
                 <FinalCTA
                     highlightTag={"LET'S BUILD SOMETHING IMPACTFUL"}
                     titleUpper={"Have a project in mind?"}
