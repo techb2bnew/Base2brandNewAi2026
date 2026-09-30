@@ -79,12 +79,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.1 }}
-              className="mt-4 font-display text-white text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-[-0.03em] text-balance"
+              className="mt-4 font-display text-white text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-[-0.03em]"
             >
-              The AI Operating Layer
-              <br />
-              <span className="bg-gradient-to-br from-[#C084FC] via-[#A855F7] to-[#6D28D9] bg-clip-text text-transparent">
-                for Your Enterprise.
+              <span className="block">The AI Operating Layer</span>
+              <span className="block bg-gradient-to-br from-[#C084FC] via-[#A855F7] to-[#6D28D9] bg-clip-text text-transparent">
+                For Your Enterprise.
               </span>
             </m.h1>
 

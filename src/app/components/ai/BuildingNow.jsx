@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useState, useLayoutEffect, useEffect } from "react";
 import { m } from "framer-motion";
 import Reveal from "@/components/site/Reveal";
 import ShiningText from "@/components/site/ShiningText";
@@ -16,6 +16,13 @@ import {
   Search,
   Share2,
   FlaskConical,
+  Building2,
+  Mail,
+  Database,
+  FileText,
+  Braces,
+  Network,
+  Check,
 } from "lucide-react";
 
 const NAV_HEIGHT = 96;
@@ -32,13 +39,31 @@ const icons = {
   Search,
   Share2,
   FlaskConical,
+  Building2,
+  Mail,
+  Database,
+  FileText,
+  Braces,
+  Network,
+};
+
+const resolveIcon = (icon) => {
+  if (!icon) return LayoutDashboard;
+  if (typeof icon === "function" || typeof icon === "object") return icon;
+  return icons[icon] || LayoutDashboard;
 };
 
 const clamp = (value, min, max) => {
   return Math.min(Math.max(value, min), max);
 };
 
-const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
+const BuildingNow = ({
+  id = "building-now-section",
+  title,
+  description,
+  highlightTag,
+  ITEMS,
+}) => {
   const sectionRef = useRef(null);
   const rafRef = useRef(null);
 
@@ -156,11 +181,23 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
     });
   };
 
+  const tabButtonRefs = useRef([]);
+
+  useEffect(() => {
+    if (tabButtonRefs.current[active]) {
+      tabButtonRefs.current[active].scrollIntoView({
+        block: "nearest",
+        behavior: "smooth",
+      });
+    }
+  }, [active]);
+
   const it = ITEMS[active];
-  const Icon = icons[it.icon] || LayoutDashboard;
+  const Icon = resolveIcon(it.icon);
   const primaryStroke = "var(--b2b-primary)";
   const secondaryStroke = "var(--b2b-primary)";
   const progressWidth = `${progress * 100}%`;
+  const isCompact = ITEMS.length > 7;
 
   const detailCard = (
     <m.div
@@ -168,7 +205,9 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
       initial={{ opacity: 0, y: 18, scale: 0.99 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="b2b-card p-5 sm:p-7 md:p-10 h-full relative overflow-hidden"
+      className={`b2b-card ${
+        isCompact ? "p-5 sm:p-6 md:p-8" : "p-5 sm:p-7 md:p-10"
+      } h-full relative overflow-hidden`}
     >
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-(--b2b-primary)/20 blur-[100px] pointer-events-none" />
 
@@ -202,7 +241,7 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
           <Icon className="w-5 h-5" />
         </span>
 
-        <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-white/40 leading-snug">
+        <span className="font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-white/50 leading-snug">
           {it.tagline}
         </span>
       </div>
@@ -211,7 +250,11 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.08, duration: 0.45 }}
-        className="relative mt-5 sm:mt-7 font-display text-xl sm:text-2xl lg:text-5xl tracking-[-0.03em] font-medium leading-[1.05]"
+        className={`relative ${
+          isCompact
+            ? "mt-4 sm:mt-5 text-xl sm:text-2xl lg:text-4xl"
+            : "mt-5 sm:mt-7 text-xl sm:text-2xl lg:text-5xl"
+        } font-display tracking-[-0.03em] font-medium leading-[1.08]`}
       >
         {it.title}
       </m.h3>
@@ -220,64 +263,104 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.16, duration: 0.45 }}
-        className="relative mt-4 sm:mt-5 text-sm sm:text-base text-white/55 leading-relaxed max-w-xl"
+        className="relative mt-3 sm:mt-4 text-sm sm:text-base text-white/65 leading-relaxed max-w-xl"
       >
         {it.desc}
       </m.p>
 
-      <m.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.22, duration: 0.45 }}
-        className="relative mt-6 sm:mt-8 flex flex-wrap gap-2"
-      >
-        {it.metrics?.map((metric) => (
-          <span
-            key={metric}
-            className="text-xs font-mono px-3 py-1.5 rounded-full bg-white/4 border border-white/10 text-white/70"
-          >
-            {metric}
-          </span>
-        ))}
-      </m.div>
+      {/* Bullet features for elaborated items */}
+      {it.features && it.features.length > 0 && (
+        <m.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.22, duration: 0.45 }}
+          className="relative mt-4 sm:mt-5 space-y-2 sm:space-y-2.5"
+        >
+          {it.features.map((feat, idx) => (
+            <div
+              key={idx}
+              className="flex items-start gap-2.5 sm:gap-3 rounded-xl bg-white/[0.03] border border-white/[0.08] px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm text-white/85"
+            >
+              <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-(--b2b-primary)/25 text-(--b2b-primary)">
+                <Check className="w-2.5 h-2.5" />
+              </span>
+              <span className="leading-snug">{feat}</span>
+            </div>
+          ))}
+        </m.div>
+      )}
 
-      <div className="relative mt-6 sm:mt-9 pt-4 sm:pt-5 border-t border-white/5 flex items-center justify-between gap-4">
+      {/* Metrics chips */}
+      {it.metrics && it.metrics.length > 0 && (
+        <m.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.22, duration: 0.45 }}
+          className="relative mt-4 sm:mt-6 flex flex-wrap gap-2"
+        >
+          {it.metrics.map((metric) => (
+            <span
+              key={metric}
+              className="text-xs font-mono px-3 py-1.5 rounded-full bg-white/4 border border-white/10 text-white/70"
+            >
+              {metric}
+            </span>
+          ))}
+        </m.div>
+      )}
+
+      <div className="relative mt-5 sm:mt-7 pt-4 sm:pt-5 border-t border-white/5 flex items-center justify-between gap-4">
         <span className="font-mono text-xs tracking-[0.25em] uppercase text-white/35">
-          Program {String(active + 1).padStart(2, "0")} / {ITEMS.length}
+          System {String(active + 1).padStart(2, "0")} / {ITEMS.length}
         </span>
 
         <a
-          href="#contact"
+          href={it.ctaHref || "#contact"}
           data-testid={`building-now-cta-${active}`}
           className="text-xs font-mono uppercase tracking-[0.2em] text-(--b2b-primary) hover:text-white transition-colors shrink-0"
         >
-          Engage →
+          {it.ctaText || "Engage →"}
         </a>
       </div>
     </m.div>
   );
 
   const tabList = (
-    <div className="lg:col-span-5 space-y-1 sm:space-y-1.5">
+    <div
+      className={`lg:col-span-5 space-y-1 sm:space-y-1.5 ${
+        isCompact
+          ? "lg:max-h-[calc(100vh-270px)] lg:overflow-y-auto lg:pr-1.5 scrollbar-thin"
+          : ""
+      }`}
+    >
       {ITEMS.map((item, i) => {
-        const ItemIcon = icons[item.icon] || LayoutDashboard;
+        const ItemIcon = resolveIcon(item.icon);
         const isActive = i === active;
 
         return (
           <button
-            key={item.title}
+            key={item.title || i}
+            ref={(el) => (tabButtonRefs.current[i] = el)}
             onClick={() => jumpTo(i)}
             data-testid={`building-now-tab-${i}`}
-            className={`group w-full text-left flex items-center gap-3 sm:gap-4 py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border transition-all duration-500 ${
+            className={`group w-full text-left flex items-center gap-2.5 sm:gap-3.5 ${
+              isCompact
+                ? "py-2 sm:py-2.5 px-3"
+                : "py-2.5 sm:py-3 px-3 sm:px-4"
+            } rounded-xl border transition-all duration-300 ${
               isActive
-                ? "bg-(--b2b-primary)/20 border-(--b2b-primary)/50"
+                ? "bg-(--b2b-primary)/20 border-(--b2b-primary)/50 shadow-[0_0_20px_rgba(var(--b2b-primary-rgb),0.15)]"
                 : "bg-transparent border-transparent hover:border-white/10 hover:bg-white/2"
             }`}
           >
             <m.span
               animate={{ scale: isActive ? 1.05 : 1 }}
               transition={{ duration: 0.35 }}
-              className={`flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-lg shrink-0 border border-white/8 ${
+              className={`flex items-center justify-center ${
+                isCompact
+                  ? "w-7 h-7 sm:w-8 sm:h-8"
+                  : "w-8 h-8 sm:w-9 sm:h-9"
+              } rounded-lg shrink-0 border border-white/8 ${
                 isActive
                   ? "bg-(--b2b-primary)/20 text-(--b2b-primary)"
                   : "bg-white/4 text-white/40"
@@ -288,7 +371,7 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
 
             <span className="flex-1 min-w-0">
               <span
-                className={`block font-mono text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase ${
+                className={`block font-mono text-[10px] sm:text-xs tracking-[0.2em] uppercase ${
                   isActive ? "text-(--b2b-primary)" : "text-white/30"
                 }`}
               >
@@ -296,7 +379,11 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
               </span>
 
               <span
-                className={`block font-display font-medium text-sm sm:text-base md:text-lg truncate ${
+                className={`block font-display font-medium ${
+                  isCompact
+                    ? "text-xs sm:text-sm md:text-base"
+                    : "text-sm sm:text-base md:text-lg"
+                } truncate ${
                   isActive ? "text-white" : "text-white/55"
                 }`}
               >
@@ -306,7 +393,7 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
 
             <m.span
               animate={{
-                height: isActive ? 32 : 0,
+                height: isActive ? 28 : 0,
                 opacity: isActive ? 1 : 0,
               }}
               transition={{ duration: 0.35 }}
@@ -353,7 +440,7 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
     return (
       <section
         ref={sectionRef}
-        id="building-now-section"
+        id={id}
         className="relative border-y border-white/5 bg-(--b2b-bg) py-12 md:py-16"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -376,7 +463,8 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
     );
   }
 
-  const scrollTrackHeight = `${ITEMS.length * 110}vh`;
+  const scrollMultiplier = ITEMS.length > 8 ? 65 : 110;
+  const scrollTrackHeight = `${ITEMS.length * scrollMultiplier}vh`;
   const panelHeight = `calc(100vh - ${NAV_HEIGHT}px)`;
 
   const panelClass =
@@ -399,7 +487,7 @@ const BuildingNow = ({ title, description, highlightTag, ITEMS }) => {
   return (
     <section
       ref={sectionRef}
-      id="building-now-section"
+      id={id}
       className="relative border-y border-white/5 bg-(--b2b-bg)"
       style={{ height: scrollTrackHeight }}
     >

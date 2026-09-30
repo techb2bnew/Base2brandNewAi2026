@@ -42,7 +42,7 @@ export default function HowItWorks() {
             How AI.me Works
           </span>
           <h2 className="mx-auto mt-5 max-w-2xl font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-            From connected data to executed action.
+            From Connected Data To Executed Action.
           </h2>
         </Reveal>
 

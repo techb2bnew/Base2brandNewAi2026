@@ -12,11 +12,33 @@
   --aime-border: rgba(255, 255, 255, 0.08);
   background: var(--aime-bg);
 
-  /* Keeps the embedded OnboardingForm's accent (which reads --b2b-primary)
-     visually consistent with this page's purple theme instead of the site
-     default orange — scoped to this page only. */
+  /* Map all sitewide component tokens to this page's purple theme (no orange fallback) */
+  --b2b-bg: var(--aime-bg);
+  --b2b-bg-2: var(--aime-bg-2);
+  --b2b-ink: #f5f7ff;
+  --b2b-mute: #9aa0b4;
+  --b2b-line: rgba(255, 255, 255, 0.08);
+  --b2b-line-strong: rgba(255, 255, 255, 0.14);
   --b2b-primary: var(--aime-accent);
   --b2b-primary-rgb: var(--aime-accent-rgb);
+  --b2b-primary-2: var(--aime-accent-2);
+  --b2b-primary-2-rgb: var(--aime-accent-2-rgb);
+  --b2b-primary-soft: rgba(139, 92, 246, 0.18);
+  --b2b-orange: var(--aime-accent);
+  --b2b-orange-2: var(--aime-accent-2);
+  --b2b-orange-soft: rgba(139, 92, 246, 0.18);
+  --b2b-glow-ring: rgba(139, 92, 246, 0.35);
+  --b2b-glow-shadow: rgba(139, 92, 246, 0.55);
+  --b2b-glow-ambient: rgba(139, 92, 246, 0.35);
+  --b2b-text-glow: rgba(139, 92, 246, 0.55);
+}
+
+.theme-ai-me-aws .b2b-card {
+  border-radius: 1.25rem;
+  border: 1px solid var(--aime-border);
+  background: linear-gradient(145deg, rgba(139, 92, 246, 0.05) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(3, 3, 10, 0.6) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .theme-ai-me-aws .aime-eyebrow {

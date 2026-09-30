@@ -28,7 +28,7 @@ export default function EventCTA() {
             Meet Us At The Event
           </span>
           <h2 className="mt-5 font-display text-3xl font-semibold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
-            Building AI inside your organization?
+            Building AI Inside Your Organization?
           </h2>
           <p className="mt-4 text-base leading-relaxed text-white/60 sm:text-lg">
             Let&rsquo;s talk about what AI.me could automate, connect, and

@@ -10,7 +10,15 @@ import {
   Microscope,
   ArrowUpRight,
   Shield,
-  Target
+  Target,
+  Building2,
+  Users,
+  Mail,
+  Database,
+  FileText,
+  Braces,
+  BrainCircuit,
+  GitBranch,
 } from "lucide-react";  
 
 const icons = {
@@ -21,12 +29,25 @@ const icons = {
   Bot,
   Microscope,
   Shield,
-  Target
+  Target,
+  Building2,
+  Users,
+  Mail,
+  Database,
+  FileText,
+  Braces,
+  BrainCircuit,
+  GitBranch,
 };
 
+const resolveIcon = (icon) => {
+  if (!icon) return Target;
+  if (typeof icon === "function" || typeof icon === "object") return icon;
+  return icons[icon] || Target;
+};
 
 const CapCard = ({cap, idx }) => {
-  const Icon = icons[cap.icon];
+  const Icon = resolveIcon(cap.icon);
   const primaryStroke = "rgba(var(--b2b-primary-rgb),0.4)";
   const secondaryStroke = "rgba(var(--b2b-primary-2-rgb),0.25)";
   return (
@@ -68,7 +89,7 @@ const CapCard = ({cap, idx }) => {
         )}
 
         <div className="relative flex items-start justify-between">
-          <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(var(--b2b-primary-rgb),0.1)] border border-[rgba(var(--b2b-primary-rgb),0.2)] text-(--b2b-primary-2)">
+          <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-[rgba(var(--b2b-primary-rgb,139,92,246),0.12)] border border-[rgba(var(--b2b-primary-rgb,139,92,246),0.25)] text-[var(--b2b-primary-2,#c084fc)]">
             <Icon className="w-5 h-5" />
           </div>
           <span className="font-mono text-xs tracking-[0.25em] uppercase text-white/30">
@@ -76,9 +97,15 @@ const CapCard = ({cap, idx }) => {
           </span>
         </div>
 
-        <h3 className="mt-2 md:mt-7 font-display text-lg sm:text-xl md:text-2xl font-medium tracking-tight">
+        <h3 className="mt-4 md:mt-6 font-display text-lg sm:text-xl md:text-2xl font-medium tracking-tight">
           {cap.title}
         </h3>
+
+        {cap.tagline && (
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-[var(--b2b-primary-2,#c084fc)]">
+            {cap.tagline}
+          </p>
+        )}
 
         {cap.desc && (
           <p className="mt-2 md:mt-3 text-sm text-white/55 leading-relaxed">
@@ -87,34 +114,42 @@ const CapCard = ({cap, idx }) => {
         )}
 
         <ul className="mt-4 md:mt-6 space-y-1.5 md:space-y-2.5">
-          {cap.items.map((item) => (
+          {cap.items?.map((item) => (
             <li
               key={item}
-              className="flex items-center gap-3 text-sm text-white/55"
+              className="flex items-center gap-3 text-sm text-white/65"
             >
-              <span className="w-3 h-px bg-[rgba(var(--b2b-primary-rgb),0.6)]" />
+              <span className="w-3 h-px bg-[rgba(var(--b2b-primary-rgb,139,92,246),0.6)]" />
               {item}
             </li>
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          data-testid={`capability-link-${idx}`}
-          className="mt-4 md:mt-8 inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] font-mono text-[rgba(var(--b2b-primary-2-rgb),0.8)] hover:text-white transition-colors"
-        >
-          Discuss this practice <ArrowUpRight className="w-3.5 h-3.5" />
-        </a>
+        {cap.cta !== false && (
+          <a
+            href={cap.ctaHref || "#contact"}
+            data-testid={`capability-link-${idx}`}
+            className="mt-4 md:mt-8 inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] font-mono text-[rgba(var(--b2b-primary-2-rgb,192,132,252),0.9)] hover:text-white transition-colors"
+          >
+            {cap.cta || "Discuss this practice"} <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
+        )}
       </div>
     </Reveal>
   );
 };
 
-const Capabilities = ({title, description, highlightTag, capsData}) => {
+const Capabilities = ({
+  id = "capabilities",
+  title,
+  description,
+  highlightTag,
+  capsData,
+}) => {
 
   return (
     <section
-      id="capabilities"
+      id={id}
       data-testid="capabilities-section"
       className="relative pt-4 pb-12 md:pt-16 md:pb-16"
     >
