@@ -12,7 +12,10 @@ import {
   GitBranch,
 } from "lucide-react";
 import { SiShopify, SiWhatsapp } from "react-icons/si";
-
+import Reveal from "./Reveal";
+import { RevealGroup, RevealItem } from "./RevealGroup";
+import Atmosphere from "@/components/site/Atmosphere";
+import SmokeBackground from "@/components/site/SmokeBackground";
 const SYSTEMS = [
   { label: "ERP", icon: Building2 },
   { label: "CRM", icon: Users },
@@ -29,10 +32,12 @@ const SYSTEMS = [
 
 export default function CoreIdea() {
   return (
-    <section id="core-idea" data-testid="aime-core-idea" className="relative py-16 sm:py-24">
+    <section id="core-idea" data-testid="aime-core-idea" className="relative py-6 sm:py-10">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
+        <SmokeBackground smokeColor="#7C3AED" opacity={0.14} />
+                <Atmosphere intensity={0.25} />
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-16">
+          <Reveal>
             <span className="aime-eyebrow">
               <span className="aime-glow-dot" />
               The Core Idea
@@ -49,12 +54,13 @@ export default function CoreIdea() {
               context, reasons over your enterprise data, calls tools, and
               executes actions.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <RevealGroup className="grid grid-cols-2 gap-3 sm:grid-cols-3" stagger={0.04}>
             {SYSTEMS.map(({ label, icon: Icon }) => (
-              <div
+              <RevealItem
                 key={label}
+                y={12}
                 data-testid={`aime-system-chip-${label.toLowerCase().replace(/\s+/g, "-")}`}
                 className="flex flex-col items-start gap-3 rounded-2xl border aime-card px-4 py-4"
               >
@@ -67,9 +73,9 @@ export default function CoreIdea() {
                 <span className="text-sm font-medium text-white/85">
                   {label}
                 </span>
-              </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </div>
     </section>
