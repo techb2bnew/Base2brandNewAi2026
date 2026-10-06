@@ -32,7 +32,7 @@ export default function Hero() {
       className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20"
     >
       <div className="relative max-w-7xl mx-auto px-4 md:px-10">
-        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
           <div>
             <m.div
               initial={{ opacity: 0, y: 24 }}
