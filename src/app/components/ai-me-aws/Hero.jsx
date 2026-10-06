@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { m } from "framer-motion";
 import {
   ArrowRight,
@@ -9,32 +9,21 @@ import {
   Sparkles,
 } from "lucide-react";
 import ShiningText from "@/components/site/ShiningText";
-import BackgroundPaths from "@/components/site/BackgroundPaths";
-import NeuralCommandCenter from "@/components/ai/NeuralCommandCenter";
 import PauseWhenHidden from "./PauseWhenHidden";
 
+// Code-split out of the main Hero bundle — still server-rendered for
+// first paint, but its JS (plus its own framer-motion step transitions)
+// hydrates as a separate chunk instead of blocking the rest of the page.
+const OnboardingForm = dynamic(
+  () => import("@/components/client-onboarding/OnboardingForm"),
+  {
+    loading: () => (
+      <div className="h-[560px] w-full animate-pulse rounded-[2rem] border border-white/10 bg-white/[0.02]" />
+    ),
+  }
+);
+
 export default function Hero() {
-  const visRef = useRef(null);
-  // BackgroundPaths (72 animated SVG paths) and NeuralCommandCenter's
-  // floating sparks are driven by framer-motion with `repeat: Infinity` —
-  // that's a continuous JS animation loop, not a CSS one, so the
-  // CSS-variable-based PauseWhenHidden trick used elsewhere on this page
-  // can't stop it. A profiler trace confirmed these keep costing JS/main
-  // thread time for the rest of the scroll even after Hero is long gone.
-  // Unmounting them outside the viewport is what actually stops that.
-  const [inView, setInView] = useState(true);
-
-  useEffect(() => {
-    const node = visRef.current;
-    if (!node || typeof IntersectionObserver === "undefined") return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { rootMargin: "400px 0px" }
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <PauseWhenHidden
       as="section"
@@ -42,52 +31,9 @@ export default function Hero() {
       data-testid="aime-hero"
       className="relative overflow-hidden pt-28 pb-16 md:pt-32 md:pb-20"
     >
-      {/* Background field — same treatment as the /ai-automation hero:
-          radial accent blobs, atmospheric paths, and a masked grid. */}
-      <div ref={visRef} className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-[radial-gradient(ellipse_at_center,rgba(var(--aime-accent-rgb),0.18),rgba(3,3,10,0)_60%)]" />
-        <div className="aime-aurora absolute top-40 left-10 w-[400px] h-[400px] rounded-full bg-[rgba(var(--aime-accent-rgb),0.06)] blur-[120px]" />
-        <div className="absolute top-20 right-10 w-[300px] h-[300px] rounded-full bg-[rgba(var(--aime-accent-2-rgb),0.05)] blur-[100px]" />
-        {inView && <BackgroundPaths opacity={0.55} />}
-        <div className="grain" />
-        <svg
-          className="absolute inset-0 w-full h-full opacity-[0.12]"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern
-              id="aime-hero-grid"
-              width="60"
-              height="60"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 60 0 L 0 0 0 60"
-                fill="none"
-                stroke="rgba(var(--aime-accent-rgb),0.18)"
-                strokeWidth="0.5"
-              />
-            </pattern>
-            <radialGradient id="aime-hero-grid-fade" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="black" stopOpacity="1" />
-              <stop offset="100%" stopColor="black" stopOpacity="0" />
-            </radialGradient>
-            <mask id="aime-hero-grid-mask">
-              <rect width="100%" height="100%" fill="url(#aime-hero-grid-fade)" />
-            </mask>
-          </defs>
-          <rect
-            width="100%"
-            height="100%"
-            fill="url(#aime-hero-grid)"
-            mask="url(#aime-hero-grid-mask)"
-          />
-        </svg>
-      </div>
-
       <div className="relative max-w-7xl mx-auto px-4 md:px-10">
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-16 items-center">
-          <div className="lg:col-span-7">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14 lg:items-center">
+          <div>
             <m.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -171,15 +117,13 @@ export default function Hero() {
             </m.div>
           </div>
 
-          {/* Right — neural command center visual (same one used on
-              /ai-automation's hero) */}
+          {/* Right — client onboarding form, front and center */}
           <m.div
-            initial={{ opacity: 0, scale: 0.92 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.2 }}
-            className="lg:col-span-5 relative"
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {inView && <NeuralCommandCenter />}
+            <OnboardingForm />
           </m.div>
         </div>
       </div>
