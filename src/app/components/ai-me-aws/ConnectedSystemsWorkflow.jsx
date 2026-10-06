@@ -75,10 +75,26 @@ const STEPS = [
 export default function ConnectedSystemsWorkflow() {
   const [activeStep, setActiveStep] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
   const timerRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  // Without this, the 3s auto-advance timer keeps firing for as long as the
+  // page stays open, even long after the user has scrolled past this
+  // section — pure wasted work on mobile.
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !isVisible) return;
 
     timerRef.current = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % STEPS.length);
@@ -87,7 +103,7 @@ export default function ConnectedSystemsWorkflow() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPlaying]);
+  }, [isPlaying, isVisible]);
 
   const handleStepClick = (index) => {
     setIsPlaying(false);
@@ -104,6 +120,7 @@ export default function ConnectedSystemsWorkflow() {
 
   return (
     <section
+      ref={sectionRef}
       id="connected-systems-example"
       data-testid="connected-systems-workflow"
       className="relative overflow-hidden py-8 sm:py-10 md:py-12 border-t border-white/10 bg-linear-to-b from-transparent via-purple-950/20 to-transparent"
