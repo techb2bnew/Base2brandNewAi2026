@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import {
   ArrowRight,
@@ -13,6 +14,27 @@ import NeuralCommandCenter from "@/components/ai/NeuralCommandCenter";
 import PauseWhenHidden from "./PauseWhenHidden";
 
 export default function Hero() {
+  const visRef = useRef(null);
+  // BackgroundPaths (72 animated SVG paths) and NeuralCommandCenter's
+  // floating sparks are driven by framer-motion with `repeat: Infinity` —
+  // that's a continuous JS animation loop, not a CSS one, so the
+  // CSS-variable-based PauseWhenHidden trick used elsewhere on this page
+  // can't stop it. A profiler trace confirmed these keep costing JS/main
+  // thread time for the rest of the scroll even after Hero is long gone.
+  // Unmounting them outside the viewport is what actually stops that.
+  const [inView, setInView] = useState(true);
+
+  useEffect(() => {
+    const node = visRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "400px 0px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <PauseWhenHidden
       as="section"
@@ -22,11 +44,11 @@ export default function Hero() {
     >
       {/* Background field — same treatment as the /ai-automation hero:
           radial accent blobs, atmospheric paths, and a masked grid. */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div ref={visRef} className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] bg-[radial-gradient(ellipse_at_center,rgba(var(--aime-accent-rgb),0.18),rgba(3,3,10,0)_60%)]" />
         <div className="aime-aurora absolute top-40 left-10 w-[400px] h-[400px] rounded-full bg-[rgba(var(--aime-accent-rgb),0.06)] blur-[120px]" />
         <div className="absolute top-20 right-10 w-[300px] h-[300px] rounded-full bg-[rgba(var(--aime-accent-2-rgb),0.05)] blur-[100px]" />
-        <BackgroundPaths opacity={0.55} />
+        {inView && <BackgroundPaths opacity={0.55} />}
         <div className="grain" />
         <svg
           className="absolute inset-0 w-full h-full opacity-[0.12]"
@@ -157,7 +179,7 @@ export default function Hero() {
             transition={{ duration: 1.1, delay: 0.2 }}
             className="lg:col-span-5 relative"
           >
-            <NeuralCommandCenter />
+            {inView && <NeuralCommandCenter />}
           </m.div>
         </div>
       </div>

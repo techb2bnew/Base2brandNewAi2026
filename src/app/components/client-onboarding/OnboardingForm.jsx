@@ -142,7 +142,7 @@ export default function OnboardingForm() {
     return (
       <div
         data-testid="onboarding-success"
-        className="flex flex-col items-center gap-4 rounded-[2rem] border border-white/10 bg-[#05070D]/90 px-6 py-16 text-center backdrop-blur-2xl"
+        className="flex flex-col items-center gap-4 rounded-[2rem] border border-white/10 bg-[#05070D]/95 px-6 py-16 text-center"
       >
         <CheckCircle2 className="h-12 w-12 text-[var(--b2b-primary)]" />
         <h2 className="font-display text-2xl font-semibold text-white sm:text-3xl">
@@ -159,7 +159,7 @@ export default function OnboardingForm() {
   return (
     <div
       data-testid="onboarding-form"
-      className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#05070D]/90 p-5 shadow-2xl backdrop-blur-2xl sm:p-8"
+      className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#05070D]/95 p-5 shadow-2xl sm:p-8"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--b2b-primary)_18%,transparent),transparent_36%)]" />
 
